@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                {% if post.author == user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-post' object.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-post' object.id %}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <h2 class="article-title">{{ post.title }}</h2>
+            <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+	
+{% endblock content %}
+
+	<div>
+            {% if not object.Comment.all %}
+                <p>No comments</p>
+            {% else %}
+                {% for comment in object.Comment.all %}
+                    <div class="row">
+                        <div class="col">
+                            <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ comment.author.username }}</a>
+                            <small class="text-muted">{{ comment.date_posted }}</small>
+                        </div>
+                        <div class="col">
+                            <p>{{ comment.content }}</p>
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            {% endif %}
+	</div>

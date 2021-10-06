@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+        <article class="media content-section" style=" background-color: rgb(76, 61, 211);
+        color: white;">
+            <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2 btn" href="{% url 'user-habits' object.author%}">{{ object.author.username }}</a>
+                <small>{{ object.date_created|date:"F d, Y" }}</small>
+                {% if object.author == user %}
+                    <div>
+                        <a class="btn btn-outline-light btn-sm m-1" href="{% url 'update-habit' object.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm m-1" href="{% url 'delete-habit' object.id%}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <h2 class="article-title" style="color: white;">{{ object.title }}</h2>
+            <p class="article-content">{{ object.context }}</p>
+            </div>
+        </article>
+        <div>
+            {% if object.posts.all %}
+                {% for post in object.posts.all %}
+                    <article class="content-section">
+                        <div class="article-metadata">
+                            <a href="#">{{ post.username }}</a>
+                            <small class="text-muted">{{ post.date_posted }}</small>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'detail-post' post.id%}">{{ post.title }}</a></h2>
+                        <p class="article-content">{{ post.content }}</p>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>No Posts created...</p>
+            {% endif %}
+        </div>
+        {% if object.author == user %}
+        <h6><a href="{% url 'create-post' object.id%}">Create Post</a></h6>
+        {% endif %}
+	
+{% endblock content %}
