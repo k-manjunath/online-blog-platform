@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 
     'crispy_forms',
-    'django_extensions', #for ERD diagram
+    #'django_extensions', #for ERD diagram
 
     'django.contrib.admin',
     'django.contrib.auth',
